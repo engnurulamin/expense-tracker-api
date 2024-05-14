@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const xssClean = require("xss-clean");
 const rateLimit = require("express-rate-limit");
+const userRouter = require("./routers/userRouter");
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(xssClean());
 app.use(morgan("dev"));
+
+app.use("/api/users", userRouter);
 
 // Rate limiting
 const rateLimiter = rateLimit({

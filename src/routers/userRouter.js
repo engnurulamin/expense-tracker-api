@@ -1,15 +1,7 @@
-const db = require("../config/db");
+const express = require("express");
+const { getUsers } = require("../controllers/userController");
+const userRouter = express.Router();
 
-const getAllUsers = async () => {
-  try {
-    const query = "SELECT * FROM users";
-    const results = await db.query(query);
-    return results;
-  } catch (err) {
-    throw err;
-  }
-};
+userRouter.get("/", getUsers);
 
-module.exports = {
-  getAllUsers,
-};
+module.exports = userRouter;
