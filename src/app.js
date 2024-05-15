@@ -6,6 +6,7 @@ const createError = require("http-errors");
 const xssClean = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const userRouter = require("./routers/userRouter");
+const seedRouter = require("./routers/seedRouter");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(xssClean());
 app.use(morgan("dev"));
 
 app.use("/api/users", userRouter);
+app.use("/api/seed", seedRouter);
 
 // Rate limiting
 const rateLimiter = rateLimit({
