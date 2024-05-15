@@ -79,4 +79,39 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getUsers, getUser, deleteUser };
+const UpdateUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const options = { new: true, runValidators: true, context: "query" };
+    await getOne(User, id, options);
+
+    let update = {};
+    const allowed_fields = ["name", "username", "email", "password"];
+    for (let key in req.body) {
+      if (allowed_fields.includes(key)) {
+        update[key] = req.body[key];
+      } else if (key === "email") {
+        throw createError(400, "Email can't be updated");
+      }
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      update,
+      options
+    ).select("-password");
+
+    if (!updatedUser) {
+      throw createError(404, "User does not exist");
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "User has updated successfully",
+      payload: updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getUsers, getUser, deleteUser, UpdateUser };
