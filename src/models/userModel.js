@@ -3,6 +3,13 @@ const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true,
+      maxlength: [31, "Max Char can be 31"],
+      Minlength: [3, "Min char at least 3"],
+    },
     username: {
       type: String,
       required: [true, "Username is required"],
