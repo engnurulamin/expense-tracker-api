@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const { successResponse } = require("../helpers");
+const { successResponse, getOne } = require("../helpers");
 const User = require("../models/userModel");
 
 const getUsers = async (req, res, next) => {
@@ -44,4 +44,19 @@ const getUsers = async (req, res, next) => {
   }
 };
 
-module.exports = { getUsers };
+const getUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const options = { password: 0 };
+    const user = await getOne(User, id, options);
+    return successResponse(res, {
+      statusCode: 200,
+      message: "User return successfully",
+      payload: { user },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getUsers, getUser };
