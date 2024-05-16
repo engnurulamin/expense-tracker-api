@@ -15,7 +15,8 @@ const processRegister = async (req, res, next) => {
 
     return successResponse(res, {
       statusCode: 200,
-      message: `Please go to your ${email} to complete regestration process`,
+      message: "Token has created",
+      payload: { token },
     });
   } catch (error) {
     next(error);
