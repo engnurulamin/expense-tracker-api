@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const errorResponse = (
   res,
   { statusCode = 500, message = "Internal Error" }
@@ -38,6 +40,22 @@ const getOne = async (Model, id, options = {}) => {
   }
 };
 
-module.exports = { getOne };
+const jsonWebtoken = (payload, secretyKey, expiresIn) => {
+  if (typeof payload !== "object" || !payload) {
+    throw new Error("Payload must be a non-empty object");
+  }
 
-module.exports = { errorResponse, successResponse, getOne };
+  if (typeof secretyKey !== "string" || secretyKey === "") {
+    throw new Error("Secret key must be a non-empty string");
+  }
+
+  try {
+    const token = jwt.sign(payload, secretyKey, { expiresIn });
+    return token;
+  } catch (error) {
+    console.error("error", "Failed to sing tke JWT", error);
+    throw error;
+  }
+};
+
+module.exports = { errorResponse, successResponse, getOne, jsonWebtoken };
