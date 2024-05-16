@@ -1,6 +1,7 @@
 const createHttpError = require("http-errors");
 const { successResponse, getOne, jsonWebtoken } = require("../helpers");
 const User = require("../models/userModel");
+const { JWT_ACTIVATION_KEY } = require("../secret");
 
 const processRegister = async (req, res, next) => {
   try {
@@ -8,7 +9,7 @@ const processRegister = async (req, res, next) => {
 
     const token = jsonWebtoken(
       { name, username, email, password },
-      jwtActivationKey,
+      JWT_ACTIVATION_KEY,
       "10m"
     );
 
