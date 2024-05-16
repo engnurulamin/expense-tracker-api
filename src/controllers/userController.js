@@ -2,6 +2,25 @@ const createHttpError = require("http-errors");
 const { successResponse, getOne } = require("../helpers");
 const User = require("../models/userModel");
 
+const processRegister = async (req, res, next) => {
+  try {
+    const { name, username, email, password } = req.body;
+
+    const token = createJsonWebToken(
+      { name, username, email, password },
+      jwtActivationKey,
+      "10m"
+    );
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: `Please go to your ${email} to complete regestration process`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getUsers = async (req, res, next) => {
   try {
     const search = req.query.search || "";
@@ -114,4 +133,4 @@ const UpdateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getUsers, getUser, deleteUser, UpdateUser };
+module.exports = { getUsers, getUser, deleteUser, UpdateUser, processRegister };
