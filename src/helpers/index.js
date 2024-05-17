@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const createError = require("http-errors");
+const mongoose = require("mongoose");
 
 const errorResponse = (
   res,
@@ -20,9 +22,6 @@ const successResponse = (
     payload,
   });
 };
-
-const createError = require("http-errors");
-const mongoose = require("mongoose");
 
 const getOne = async (Model, id, options = {}) => {
   try {
