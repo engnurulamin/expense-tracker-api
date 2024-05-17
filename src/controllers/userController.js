@@ -1,4 +1,4 @@
-const createHttpError = require("http-errors");
+const createError = require("http-errors");
 const { successResponse, getOne, jsonWebtoken } = require("../helpers");
 const User = require("../models/userModel");
 const { JWT_ACTIVATION_KEY } = require("../secret");
@@ -6,6 +6,11 @@ const { JWT_ACTIVATION_KEY } = require("../secret");
 const processRegister = async (req, res, next) => {
   try {
     const { name, username, email, password } = req.body;
+    const userExist = await User.exists({ email: email });
+
+    if (userExist) {
+      throw createError(409, "User already exists");
+    }
 
     const token = jsonWebtoken(
       { name, username, email, password },
