@@ -7,6 +7,7 @@ const xssClean = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const userRouter = require("./routers/userRouter");
 const seedRouter = require("./routers/seedRouter");
+const authRouter = require("./routers/authRouter");
 
 const app = express();
 
@@ -17,8 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(xssClean());
 app.use(morgan("dev"));
 
-app.use("/api/users", userRouter);
 app.use("/api/seed", seedRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 // Rate limiting
 const rateLimiter = rateLimit({
