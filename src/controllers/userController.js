@@ -1,9 +1,10 @@
 const createError = require("http-errors");
 const { successResponse, getOne, jsonWebtoken } = require("../helpers");
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 const { JWT_ACTIVATION_KEY } = require("../secret");
 
-const processRegister = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   try {
     const { name, username, email, password } = req.body;
     const userExist = await User.exists({ email: email });
@@ -17,11 +18,12 @@ const processRegister = async (req, res, next) => {
       JWT_ACTIVATION_KEY,
       "10m"
     );
-
+    const newUser = { name, username, email, password };
+    const user = await User.create(newUser);
     return successResponse(res, {
       statusCode: 200,
-      message: "Token has created",
-      payload: { token },
+      message: "New user has created",
+      payload: { user },
     });
   } catch (error) {
     next(error);
@@ -140,4 +142,4 @@ const UpdateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getUsers, getUser, deleteUser, UpdateUser, processRegister };
+module.exports = { getUsers, getUser, deleteUser, UpdateUser, createUser };

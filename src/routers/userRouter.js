@@ -4,11 +4,11 @@ const {
   getUser,
   deleteUser,
   UpdateUser,
-  processRegister,
+  createUser,
 } = require("../controllers/userController");
 const userRouter = express.Router();
 
-userRouter.post("/process-register", processRegister);
+userRouter.post("/register", createUser);
 userRouter.get("/", getUsers);
 userRouter.get("/:id", getUser);
 userRouter.delete("/:id", deleteUser);
