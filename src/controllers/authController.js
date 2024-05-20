@@ -49,4 +49,19 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "User logged out successfully",
+      payload: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, logout };
