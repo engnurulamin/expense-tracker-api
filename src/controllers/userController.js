@@ -18,6 +18,7 @@ const createUser = async (req, res, next) => {
       JWT_ACTIVATION_KEY,
       "10m"
     );
+
     const newUser = { name, username, email, password };
     const user = await User.create(newUser);
     return successResponse(res, {
