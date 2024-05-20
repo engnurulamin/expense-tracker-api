@@ -9,6 +9,13 @@ const validateUserRegistration = [
     .isLength({ min: 3, max: 31 })
     .withMessage("Name must be within 3-31 characters"),
 
+  body("username")
+    .trim()
+    .notEmpty()
+    .withMessage("Username is required")
+    .isLength({ min: 3, max: 31 })
+    .withMessage("Username must be within 3-31 characters"),
+
   body("email")
     .trim()
     .notEmpty()
