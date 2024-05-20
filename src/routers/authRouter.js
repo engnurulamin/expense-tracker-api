@@ -1,12 +1,10 @@
 const express = require("express");
-
-const { isLoggedOut, isLoggedIn } = require("../middleware/auth");
-const { validateUserLogin } = require("../validators/auth");
-const runValidation = require("../validators");
 const { login } = require("../controllers/authController");
+const { validateUserLogin } = require("../validator/auth");
+const runValidation = require("../validator");
 
 const authRouter = express.Router();
 
-authRouter.post("/login", login);
+authRouter.post("/login", validateUserLogin, runValidation, login);
 
 module.exports = authRouter;
