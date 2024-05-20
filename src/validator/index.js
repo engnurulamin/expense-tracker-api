@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { errorResponse } = require("../controllers/responseController");
+const { errorResponse } = require("../helpers");
 
 const runValidation = async (req, res, next) => {
   try {

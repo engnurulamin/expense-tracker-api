@@ -6,9 +6,16 @@ const {
   UpdateUser,
   createUser,
 } = require("../controllers/userController");
+const { validateUserRegistration } = require("../validator/auth");
+const runValidation = require("../validator");
 const userRouter = express.Router();
 
-userRouter.post("/register", createUser);
+userRouter.post(
+  "/register",
+  validateUserRegistration,
+  runValidation,
+  createUser
+);
 userRouter.get("/", getUsers);
 userRouter.get("/:id", getUser);
 userRouter.delete("/:id", deleteUser);
