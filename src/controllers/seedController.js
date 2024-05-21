@@ -1,6 +1,7 @@
 const data = require("../data");
 const User = require("../models/userModel");
 const Balance = require("../models/balanceModel");
+const Expense = require("../models/expenseModel");
 
 const seedUser = async (req, res, next) => {
   try {
@@ -24,4 +25,15 @@ const seedBalance = async (req, res, next) => {
   }
 };
 
-module.exports = { seedUser, seedBalance };
+const seedExpense = async (req, res, next) => {
+  try {
+    await Expense.deleteMany({});
+
+    const expense = await Expense.insertMany(data.expense);
+    return res.status(201).json(expense);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { seedUser, seedBalance, seedExpense };

@@ -57,32 +57,32 @@ const data = {
     {
       date: new Date("2024-05-01T00:00:00Z"),
       expense: 1000.0,
-      note: "Initial deposit",
+      note: "In",
     },
     {
       date: new Date("2024-05-10T00:00:00Z"),
       expense: 500.0,
-      note: "Withdrawal",
+      note: "W",
     },
     {
       date: new Date("2024-05-05T00:00:00Z"),
       expense: 2000.0,
-      note: "Salary",
+      note: "S",
     },
     {
       date: new Date("2024-05-15T00:00:00Z"),
       expense: 1800.0,
-      note: "Groceries",
+      note: "G",
     },
     {
       date: new Date("2024-05-03T00:00:00Z"),
       expense: 1500.0,
-      note: "Freelance payment",
+      note: "F",
     },
     {
       date: new Date("2024-05-20T00:00:00Z"),
-      balance: 1200.0,
-      note: "Shopping",
+      expense: 1200.0,
+      note: "S",
     },
   ],
 };
