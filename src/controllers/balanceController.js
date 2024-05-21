@@ -1,6 +1,6 @@
 const createError = require("http-errors");
 const Balance = require("../models/balanceModel");
-const { successResponse } = require("../helpers");
+const { successResponse, getOne } = require("../helpers");
 
 const allBalances = async (req, res, next) => {
   try {
@@ -60,4 +60,18 @@ const allBalances = async (req, res, next) => {
   }
 };
 
-module.exports = { allBalances };
+const getBalance = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const balance = await getOne(Balance, id);
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Balance return successfully",
+      payload: { balance },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { allBalances, getBalance };
