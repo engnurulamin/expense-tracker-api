@@ -9,6 +9,7 @@ const userRouter = require("./routers/userRouter");
 const seedRouter = require("./routers/seedRouter");
 const authRouter = require("./routers/authRouter");
 const balanceRouter = require("./routers/balanceRouter");
+const expenseRouter = require("./routers/expenseRouter");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/api/seed", seedRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/balance", balanceRouter);
+app.use("/api/expense", expenseRouter);
 
 // Rate limiting
 const rateLimiter = rateLimit({
