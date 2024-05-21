@@ -74,6 +74,20 @@ const getExpense = async (req, res, next) => {
   }
 };
 
+const addExpense = async (req, res, next) => {
+  try {
+    const { date, expense_amount, note } = req.body;
+
+    const addExpense = await Expense.create({ date, expense_amount, note });
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Expense has added",
+      payload: { addExpense },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const UpdateExpense = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -125,4 +139,5 @@ module.exports = {
   getExpense,
   UpdateExpense,
   deleteExpense,
+  addExpense,
 };
