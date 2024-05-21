@@ -103,4 +103,21 @@ const UpdateBalance = async (req, res, next) => {
   }
 };
 
-module.exports = { allBalances, getBalance, UpdateBalance };
+const deleteBalance = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const options = { password: 0 };
+    await getOne(Balance, id, options);
+
+    await Balance.findByIdAndDelete({ _id: id });
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Balance deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { allBalances, getBalance, UpdateBalance, deleteBalance };
