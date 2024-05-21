@@ -13,7 +13,7 @@ const balanceSchema = new Schema(
     note: {
       type: String,
       trim: true,
-      maxlength: [255, "Max char can be 255"],
+      maxlength: [255, "Max char can be 25"],
     },
   },
   {
