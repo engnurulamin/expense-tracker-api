@@ -60,6 +60,20 @@ const allBalances = async (req, res, next) => {
   }
 };
 
+const addBalance = async (req, res, next) => {
+  try {
+    const { date, balance, note } = req.body;
+
+    const addBalance = await Balance.create({ date, balance, note });
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Balance has added",
+      payload: { addBalance },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const getBalance = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -120,4 +134,10 @@ const deleteBalance = async (req, res, next) => {
   }
 };
 
-module.exports = { allBalances, getBalance, UpdateBalance, deleteBalance };
+module.exports = {
+  allBalances,
+  getBalance,
+  UpdateBalance,
+  deleteBalance,
+  addBalance,
+};
