@@ -95,7 +95,7 @@ const UpdateBalance = async (req, res, next) => {
     await getOne(Balance, id, options);
 
     let update = {};
-    const allowed_fields = ["date", "balance", "note"];
+    const allowed_fields = ["date", "amount", "note"];
     for (let key in req.body) {
       if (allowed_fields.includes(key)) {
         update[key] = req.body[key];
