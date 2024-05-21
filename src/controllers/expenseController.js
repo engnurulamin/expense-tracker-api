@@ -74,7 +74,55 @@ const getExpense = async (req, res, next) => {
   }
 };
 
+const UpdateExpense = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const options = { new: true, runValidators: true, context: "query" };
+    await getOne(Expense, id, options);
+
+    let update = {};
+    const allowed_fields = ["date", "expense_amount", "note"];
+    for (let key in req.body) {
+      if (allowed_fields.includes(key)) {
+        update[key] = req.body[key];
+      }
+    }
+    const updatedExpense = await Expense.findByIdAndUpdate(id, update, options);
+
+    if (!updatedExpense) {
+      throw createError(404, "Expense does not exist");
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Expense has updated successfully",
+      payload: updatedExpense,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteExpense = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const options = { password: 0 };
+    await getOne(Expense, id, options);
+
+    await Expense.findByIdAndDelete({ _id: id });
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Expense deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   allexpenses,
   getExpense,
+  UpdateExpense,
+  deleteExpense,
 };
