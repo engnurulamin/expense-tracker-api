@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
-const bcrypt = require("bcryptjs");
 
-const balanceSchema = new mongoose.Schema(
+const balanceSchema = new Schema(
   {
     date: {
       type: Date,
@@ -22,6 +21,6 @@ const balanceSchema = new mongoose.Schema(
   }
 );
 
-const Balance = mongoose.model("Balance", balanceSchema);
+const Balance = model("Balance", balanceSchema);
 
 module.exports = Balance;
