@@ -74,4 +74,33 @@ const getBalance = async (req, res, next) => {
   }
 };
 
-module.exports = { allBalances, getBalance };
+const UpdateBalance = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const options = { new: true, runValidators: true, context: "query" };
+    await getOne(Balance, id, options);
+
+    let update = {};
+    const allowed_fields = ["date", "balance", "note"];
+    for (let key in req.body) {
+      if (allowed_fields.includes(key)) {
+        update[key] = req.body[key];
+      }
+    }
+    const updatedBalance = await Balance.findByIdAndUpdate(id, update, options);
+
+    if (!updatedBalance) {
+      throw createError(404, "Blance does not exist");
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Blance has updated successfully",
+      payload: updatedBalance,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { allBalances, getBalance, UpdateBalance };
