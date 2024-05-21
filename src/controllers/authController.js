@@ -28,8 +28,8 @@ const login = async (req, res, next) => {
         "Your account is banned. Please contact with authority"
       );
     }
-    const userWithouitPassword = user.toObject();
-    delete userWithouitPassword.password;
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
 
     const accessToken = jsonWebtoken({ user }, JWT_ACCESS_KEY, "5m");
 
@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
     return successResponse(res, {
       statusCode: 200,
       message: "User logged in successfully",
-      payload: { userWithouitPassword },
+      payload: { userWithoutPassword },
     });
   } catch (error) {
     next(error);
