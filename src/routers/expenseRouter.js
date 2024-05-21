@@ -6,13 +6,14 @@ const {
   deleteExpense,
   addExpense,
 } = require("../controllers/expenseController");
+const { isLoggedIn } = require("../helpers/utils");
 
 const expenseRouter = express.Router();
 
-expenseRouter.get("/", allexpenses);
-expenseRouter.post("/add", addExpense);
-expenseRouter.get("/:id", getExpense);
-expenseRouter.put("/:id", UpdateExpense);
-expenseRouter.delete("/:id", deleteExpense);
+expenseRouter.get("/", isLoggedIn, allexpenses);
+expenseRouter.post("/add", isLoggedIn, addExpense);
+expenseRouter.get("/:id", isLoggedIn, getExpense);
+expenseRouter.put("/:id", isLoggedIn, UpdateExpense);
+expenseRouter.delete("/:id", isLoggedIn, deleteExpense);
 
 module.exports = expenseRouter;
