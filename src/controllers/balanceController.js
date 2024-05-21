@@ -26,7 +26,7 @@ const allBalances = async (req, res, next) => {
     }
     if (!isNaN(search)) {
       balanceFilter = {
-        balance: Number(search),
+        amount: Number(search),
       };
     }
     const filter = {
@@ -62,9 +62,9 @@ const allBalances = async (req, res, next) => {
 
 const addBalance = async (req, res, next) => {
   try {
-    const { date, balance, note } = req.body;
+    const { date, amount, note } = req.body;
 
-    const addBalance = await Balance.create({ date, balance, note });
+    const addBalance = await Balance.create({ date, amount, note });
     return successResponse(res, {
       statusCode: 200,
       message: "Balance has added",

@@ -6,9 +6,9 @@ const expenseSchema = new Schema(
       type: Date,
       required: [true, "Date is required"],
     },
-    expense: {
+    expense_amount: {
       type: Number,
-      required: [true, "Expense is required"],
+      required: [true, "Expense amount is required"],
     },
     note: {
       type: String,

@@ -6,9 +6,9 @@ const balanceSchema = new Schema(
       type: Date,
       required: [true, "Date is required"],
     },
-    balance: {
+    amount: {
       type: Number,
-      required: [true, "Balance is required"],
+      required: [true, "Amount is required"],
     },
     note: {
       type: String,
