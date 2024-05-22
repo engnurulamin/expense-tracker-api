@@ -39,17 +39,17 @@ const getOne = async (Model, id, options = {}) => {
   }
 };
 
-const jsonWebtoken = (payload, secretyKey, expiresIn) => {
+const jsonWebtoken = (payload, secretKey, expiresIn) => {
   if (typeof payload !== "object" || !payload) {
     throw new Error("Payload must be a non-empty object");
   }
 
-  if (typeof secretyKey !== "string" || secretyKey === "") {
+  if (typeof secretKey !== "string" || secretKey === "") {
     throw new Error("Secret key must be a non-empty string");
   }
 
   try {
-    const token = jwt.sign(payload, secretyKey, { expiresIn });
+    const token = jwt.sign(payload, secretKey, { expiresIn });
     return token;
   } catch (error) {
     console.error("error", "Failed to sing tke JWT", error);
