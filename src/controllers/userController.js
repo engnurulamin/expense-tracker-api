@@ -7,7 +7,7 @@ const { JWT_ACTIVATION_KEY } = require("../secret");
 const createUser = async (req, res, next) => {
   try {
     const { name, username, email, password } = req.body;
-    const userExist = await User.exists({ email: email });
+    const userExist = await User.exists({ email: email, username: username });
 
     if (userExist) {
       throw createError(409, "User already exists");
