@@ -52,7 +52,7 @@ const jsonWebtoken = (payload, secretKey, expiresIn) => {
     const token = jwt.sign(payload, secretKey, { expiresIn });
     return token;
   } catch (error) {
-    console.error("error", "Failed to sing tke JWT", error);
+    console.error("Failed to sing tke JWT :", error);
     throw error;
   }
 };

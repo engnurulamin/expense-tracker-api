@@ -8,6 +8,7 @@ const {
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const { JWT_ACCESS_KEY, JWT_REFRESH_KEY } = require("../secret");
+const { http } = require("winston");
 
 const login = async (req, res, next) => {
   try {
@@ -31,13 +32,20 @@ const login = async (req, res, next) => {
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 
-    const accessToken = jsonWebtoken({ user }, JWT_ACCESS_KEY, "5m");
+    const accessToken = jsonWebtoken({ _id: user._id }, JWT_ACCESS_KEY, "15m");
 
-    accessTokenCookie(res, accessToken);
+    res.cookie("accessToken", accessToken, {
+      maxAge: 15 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
-    const refreshToken = jsonWebtoken({ user }, JWT_REFRESH_KEY, "7d");
+    // accessTokenCookie(res, accessToken);
 
-    refreshTokenCookie(res, refreshToken);
+    // const refreshToken = jsonWebtoken({ user }, JWT_REFRESH_KEY, "7d");
+
+    // refreshTokenCookie(res, refreshToken);
 
     return successResponse(res, {
       statusCode: 200,
@@ -52,7 +60,7 @@ const login = async (req, res, next) => {
 const logout = async (req, res, next) => {
   try {
     res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    // res.clearCookie("refreshToken");
 
     return successResponse(res, {
       statusCode: 200,
