@@ -1,7 +1,7 @@
 const app = require("./app");
 const connectDatabase = require("./config/db");
 
-const serverPort = process.env.PORT || 8800;
+const serverPort = 8800 || 8801;
 
 async function startServer() {
   try {
