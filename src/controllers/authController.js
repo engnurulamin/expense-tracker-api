@@ -32,20 +32,23 @@ const login = async (req, res, next) => {
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 
-    const accessToken = jsonWebtoken({ _id: user._id }, JWT_ACCESS_KEY, "15m");
+    const accessToken = jsonWebtoken({ _id: user._id }, JWT_ACCESS_KEY, "1m");
 
     res.cookie("accessToken", accessToken, {
-      maxAge: 15 * 60 * 1000,
+      maxAge: 1 * 60 * 1000,
       httpOnly: true,
       secure: true,
       sameSite: "none",
     });
 
-    // accessTokenCookie(res, accessToken);
+    const refreshToken = jsonWebtoken({ _id: user._id }, JWT_REFRESH_KEY, "7d");
 
-    // const refreshToken = jsonWebtoken({ user }, JWT_REFRESH_KEY, "7d");
-
-    // refreshTokenCookie(res, refreshToken);
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
     return successResponse(res, {
       statusCode: 200,
