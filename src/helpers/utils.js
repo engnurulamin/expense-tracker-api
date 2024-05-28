@@ -10,7 +10,6 @@ const isLoggedIn = async (req, res, next) => {
       throw createError(401, "Access token not found, Please login");
     }
     const decoded = jwt.verify(token, JWT_ACCESS_KEY);
-    console.log("Decoded token:", decoded);
     if (!decoded) {
       throw createError(401, "Invalid access token, Please login again");
     }
