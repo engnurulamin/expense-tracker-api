@@ -33,7 +33,7 @@ const login = async (req, res, next) => {
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 
-    const accessToken = jsonWebtoken({ user }, JWT_ACCESS_KEY, "1m");
+    const accessToken = jsonWebtoken({ user }, JWT_ACCESS_KEY, "15m");
 
     setAccessTokenCookie(res, accessToken);
 
@@ -75,7 +75,7 @@ const refreshToken = async (req, res, next) => {
       throw createError(401, "Invalid refresh token");
     }
 
-    const accessToken = jsonWebtoken(decodedToken.user, JWT_ACCESS_KEY, "1m");
+    const accessToken = jsonWebtoken(decodedToken.user, JWT_ACCESS_KEY, "5m");
 
     setAccessTokenCookie(res, accessToken);
 
