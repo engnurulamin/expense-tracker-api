@@ -79,7 +79,16 @@ const addExpense = async (req, res, next) => {
   try {
     const { date, expense_amount, note } = req.body;
 
-    const addExpense = await Expense.create({ date, expense_amount, note });
+    if (!req.user || !req.user._id) {
+      throw createError(401, "User not authenticated");
+    }
+
+    const addExpense = await Expense.create({
+      date,
+      expense_amount,
+      note,
+      user: req.user._id,
+    });
     return successResponse(res, {
       statusCode: 200,
       message: "Expense has added",
