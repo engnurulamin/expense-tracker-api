@@ -75,4 +75,35 @@ const logout = async (req, res, next) => {
   }
 };
 
-module.exports = { login, logout };
+const refreshToken = async (req, res, next) => {
+  try {
+    const oldRefreshToken = req.cookies.refreshToken;
+    const decodedToken = jwt.verify(oldRefreshToken, jwtRefreshKey);
+
+    if (!decodedToken) {
+      throw createError(401, "Invalid refresh token");
+    }
+
+    const accessToken = createJsonWebToken(
+      decodedToken.user,
+      jwtAccessKey,
+      "5m"
+    );
+    setAccessTokenCookie(res, accessToken);
+    // res.cookie("accessToken", accessToken, {
+    //   maxAge: 5 * 60 * 1000,
+    //   httpOnly: true,
+    //   // secure: true,
+    //   sameSite: "none",
+    // });
+    return successResponse(res, {
+      statusCode: 200,
+      message: "New access token is generated",
+      payload: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, logout, refreshToken };
