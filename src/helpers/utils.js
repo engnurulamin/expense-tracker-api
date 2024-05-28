@@ -10,10 +10,12 @@ const isLoggedIn = async (req, res, next) => {
       throw createError(401, "Access token not found, Please login");
     }
     const decoded = jwt.verify(token, JWT_ACCESS_KEY);
+    console.log("Decoded token:", decoded);
     if (!decoded) {
       throw createError(401, "Invalid access token, Please login again");
     }
-    req.body.userId = decoded._id;
+    req.user = { _id: decoded.user._id };
+    // req.body.userId = decoded._id;
     return next();
   } catch (error) {
     return next(error);

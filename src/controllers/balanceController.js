@@ -65,7 +65,16 @@ const addBalance = async (req, res, next) => {
   try {
     const { date, amount, note } = req.body;
 
-    const addBalance = await Balance.create({ date, amount, note });
+    if (!req.user || !req.user._id) {
+      throw createError(401, "User not authenticated");
+    }
+
+    const addBalance = await Balance.create({
+      date,
+      amount,
+      note,
+      user: req.user._id,
+    });
     return successResponse(res, {
       statusCode: 200,
       message: "Balance has added",
