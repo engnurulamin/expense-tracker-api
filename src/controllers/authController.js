@@ -39,7 +39,7 @@ const login = async (req, res, next) => {
 
     const refreshToken = jsonWebtoken({ user }, JWT_REFRESH_KEY, "7d");
 
-    setRefreshTokenCookie(res, accessToken);
+    setRefreshTokenCookie(res, refreshToken);
 
     return successResponse(res, {
       statusCode: 200,
