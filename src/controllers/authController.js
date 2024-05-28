@@ -1,4 +1,5 @@
 const createError = require("http-errors");
+const jwt = require("jsonwebtoken");
 const {
   successResponse,
   accessTokenCookie,
@@ -32,7 +33,7 @@ const login = async (req, res, next) => {
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 
-    const accessToken = jsonWebtoken({ _id: user._id }, JWT_ACCESS_KEY, "1m");
+    const accessToken = jsonWebtoken({ user }, JWT_ACCESS_KEY, "1m");
 
     res.cookie("accessToken", accessToken, {
       maxAge: 1 * 60 * 1000,
@@ -41,7 +42,7 @@ const login = async (req, res, next) => {
       sameSite: "none",
     });
 
-    const refreshToken = jsonWebtoken({ _id: user._id }, JWT_REFRESH_KEY, "7d");
+    const refreshToken = jsonWebtoken({ user }, JWT_REFRESH_KEY, "7d");
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -78,27 +79,20 @@ const logout = async (req, res, next) => {
 const refreshToken = async (req, res, next) => {
   try {
     const oldRefreshToken = req.cookies.refreshToken;
-    const decodedToken = jwt.verify(oldRefreshToken, jwtRefreshKey);
+    const decodedToken = jwt.verify(oldRefreshToken, JWT_REFRESH_KEY);
+    console.log("OLDD", decodedToken);
 
     if (!decodedToken) {
       throw createError(401, "Invalid refresh token");
     }
 
-    const accessToken = createJsonWebToken(
-      decodedToken.user,
-      jwtAccessKey,
-      "5m"
-    );
-    setAccessTokenCookie(res, accessToken);
-    // res.cookie("accessToken", accessToken, {
-    //   maxAge: 5 * 60 * 1000,
-    //   httpOnly: true,
-    //   // secure: true,
-    //   sameSite: "none",
-    // });
+    const accessToken = jsonWebtoken(decodedToken.user, JWT_ACCESS_KEY, "1m");
+
+    accessTokenCookie(res, accessToken);
+
     return successResponse(res, {
       statusCode: 200,
-      message: "New access token is generated",
+      message: "New access token has been generated",
       payload: {},
     });
   } catch (error) {
