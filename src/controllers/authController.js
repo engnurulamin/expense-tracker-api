@@ -70,7 +70,6 @@ const refreshToken = async (req, res, next) => {
   try {
     const oldRefreshToken = req.cookies.refreshToken;
     const decodedToken = jwt.verify(oldRefreshToken, JWT_REFRESH_KEY);
-    console.log("OLDD", decodedToken);
 
     if (!decodedToken) {
       throw createError(401, "Invalid refresh token");
@@ -90,4 +89,23 @@ const refreshToken = async (req, res, next) => {
   }
 };
 
-module.exports = { login, logout, refreshToken };
+const handleProtected = async (req, res, next) => {
+  try {
+    const accessToken = req.cookies.accessToken;
+    const decodedToken = jwt.verify(accessToken, JWT_ACCESS_KEY);
+
+    if (!decodedToken) {
+      throw createError(401, "Invalid access token");
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Protected resources accessed successfully",
+      payload: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, logout, refreshToken, handleProtected };
