@@ -111,10 +111,15 @@ const validateResetPassword = [
     ),
 ];
 
+const validateRefreshToken = [
+  body("token").trim().notEmpty().withMessage("Token is missing"),
+];
+
 module.exports = {
   validateUserRegistration,
   validateUserLogin,
   validateChangePassword,
   validateForgetPassword,
   validateResetPassword,
+  validateRefreshToken,
 };
