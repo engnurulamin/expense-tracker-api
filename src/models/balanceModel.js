@@ -15,6 +15,11 @@ const balanceSchema = new Schema(
       trim: true,
       maxlength: [255, "Max char can be 25"],
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
