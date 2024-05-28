@@ -2,9 +2,9 @@ const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 const {
   successResponse,
-  accessTokenCookie,
-  refreshTokenCookie,
   jsonWebtoken,
+  setAccessTokenCookie,
+  setRefreshTokenCookie,
 } = require("../helpers");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
@@ -35,21 +35,11 @@ const login = async (req, res, next) => {
 
     const accessToken = jsonWebtoken({ user }, JWT_ACCESS_KEY, "1m");
 
-    res.cookie("accessToken", accessToken, {
-      maxAge: 1 * 60 * 1000,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
+    setAccessTokenCookie(res, accessToken);
 
     const refreshToken = jsonWebtoken({ user }, JWT_REFRESH_KEY, "7d");
 
-    res.cookie("refreshToken", refreshToken, {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
+    setRefreshTokenCookie(res, accessToken);
 
     return successResponse(res, {
       statusCode: 200,
@@ -88,7 +78,7 @@ const refreshToken = async (req, res, next) => {
 
     const accessToken = jsonWebtoken(decodedToken.user, JWT_ACCESS_KEY, "1m");
 
-    accessTokenCookie(res, accessToken);
+    setAccessTokenCookie(res, accessToken);
 
     return successResponse(res, {
       statusCode: 200,

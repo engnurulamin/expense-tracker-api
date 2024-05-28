@@ -57,7 +57,7 @@ const jsonWebtoken = (payload, secretKey, expiresIn) => {
   }
 };
 
-const accessTokenCookie = (res, accessToken) => {
+const setAccessTokenCookie = (res, accessToken) => {
   res.cookie("accessToken", accessToken, {
     maxAge: 5 * 60 * 1000,
     httpOnly: true,
@@ -66,7 +66,7 @@ const accessTokenCookie = (res, accessToken) => {
   });
 };
 
-const refreshTokenCookie = (res, refreshToken) => {
+const setRefreshTokenCookie = (res, refreshToken) => {
   res.cookie("refreshToken", refreshToken, {
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
@@ -80,6 +80,6 @@ module.exports = {
   successResponse,
   getOne,
   jsonWebtoken,
-  accessTokenCookie,
-  refreshTokenCookie,
+  setAccessTokenCookie,
+  setRefreshTokenCookie,
 };
