@@ -35,7 +35,10 @@ const allexpenses = async (req, res, next) => {
     };
 
     const expense = await Expense.find(filter)
-      .populate("user")
+      .populate({
+        path: "user",
+        select: "-password",
+      })
       .limit(limit)
       .skip((page - 1) * limit);
 

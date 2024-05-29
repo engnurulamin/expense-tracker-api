@@ -35,7 +35,10 @@ const allBalances = async (req, res, next) => {
     };
 
     const balance = await Balance.find(filter)
-      .populate("user")
+      .populate({
+        path: "user",
+        select: "-password",
+      })
       .limit(limit)
       .skip((page - 1) * limit);
 
