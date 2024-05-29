@@ -30,6 +30,7 @@ const allexpenses = async (req, res, next) => {
       };
     }
     const filter = {
+      user: req.user._id,
       $or: [dateFilter, expenseFilter, { note: { $regex: searchRegExp } }],
     };
 

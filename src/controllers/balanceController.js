@@ -30,6 +30,7 @@ const allBalances = async (req, res, next) => {
       };
     }
     const filter = {
+      user: req.user._id,
       $or: [dateFilter, balanceFilter, { note: { $regex: searchRegExp } }],
     };
 
