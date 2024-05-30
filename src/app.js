@@ -10,8 +10,19 @@ const seedRouter = require("./routers/seedRouter");
 const authRouter = require("./routers/authRouter");
 const balanceRouter = require("./routers/balanceRouter");
 const expenseRouter = require("./routers/expenseRouter");
+const cors = require("cors");
 
 const app = express();
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:5175",
+    ],
+  })
+);
 
 // Middleware
 app.use(cookieParser());
