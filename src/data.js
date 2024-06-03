@@ -18,6 +18,36 @@ const data = {
       email: "mahia@gmail.com",
       password: "Amin@1234",
     },
+    {
+      name: "Masrurah",
+      username: "masrurah",
+      email: "masrurah@gmail.com",
+      password: "Amin@1234",
+    },
+    {
+      name: "Bushra",
+      username: "bushra",
+      email: "bushra@gmail.com",
+      password: "Amin@1234",
+    },
+    {
+      name: "taiba",
+      username: "taiba",
+      email: "taiba@gmail.com",
+      password: "Amin@1234",
+    },
+    {
+      name: "Najiba",
+      username: "najiba",
+      email: "najiba@gmail.com",
+      password: "Amin@1234",
+    },
+    {
+      name: "taqwa",
+      username: "taqwa",
+      email: "taqwa@gmail.com",
+      password: "Amin@1234",
+    },
   ],
 
   balance: [
