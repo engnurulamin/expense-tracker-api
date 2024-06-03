@@ -35,9 +35,9 @@ const getUsers = async (req, res, next) => {
   try {
     const search = req.query.search || "";
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 5;
+    const limit = Number(req.query.limit) || 10;
 
-    const searchRegExp = new RegExp(".*" + search + ".* ", "i");
+    const searchRegExp = new RegExp(".*" + search + ".*", "i");
     const filter = {
       isAdmin: { $ne: true },
       $or: [
@@ -50,7 +50,7 @@ const getUsers = async (req, res, next) => {
     const users = await User.find(filter, options)
       .limit(limit)
       .skip((page - 1) * limit);
-
+    console.log(users);
     const count = await User.find(filter).countDocuments();
 
     if (!users || users.length === 0) throw createError(404, "Users Not Found");
