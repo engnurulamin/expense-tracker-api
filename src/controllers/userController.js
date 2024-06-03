@@ -50,7 +50,6 @@ const getUsers = async (req, res, next) => {
     const users = await User.find(filter, options)
       .limit(limit)
       .skip((page - 1) * limit);
-    console.log(users);
     const count = await User.find(filter).countDocuments();
 
     if (!users || users.length === 0) throw createError(404, "Users Not Found");
